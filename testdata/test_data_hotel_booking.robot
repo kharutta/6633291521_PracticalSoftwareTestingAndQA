@@ -1,9 +1,8 @@
 *** Variables ***
-${test_data_form_name}    Student Registration Form
-${hotel_booking_firstname}    Jonathan
-${hotel_booking_lastname}    Stanton
-${hotel_booking_email}    mybooking@email.com
-${number_of_adults}    3
-${hotel_booking_mobile_phone}    0899999999
-${hotel_booking_note}    add one more breakfast for children
-${test_data_sccess_submit_message}    Your registration has been completed
+${hotel_booking_firstname}    firstName
+${hotel_booking_lastname}    lastName
+${hotel_booking_email}    studentName@chula.ac.th
+${number_of_adults}    2
+${hotel_booking_mobile_phone}    000000000
+${hotel_booking_note}    note
+${test_data_sccess_submit_message}    Thanks for submitting!
