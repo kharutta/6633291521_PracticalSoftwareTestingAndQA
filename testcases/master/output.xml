@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.14.3 on darwin)" generated="2026-02-14T15:14:47.734329" rpa="false" schemaversion="5">
+<suite id="s1" name="Hotel Booking" source="/Users/ingkharutruttana-o-pha/Desktop/cu_robot_framework/testcases/master/hotel_booking.robot">
+<test id="s1-t1" name="Verify registration form with all input field" line="6">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:47.814266" level="INFO">Opening browser 'safari' to base url 'https://panaryco.wixsite.com/myhotel'.</msg>
+<arg>https://panaryco.wixsite.com/myhotel</arg>
+<arg>safari</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2026-02-14T15:14:47.814108" elapsed="1.257007"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2026-02-14T15:14:49.071592" elapsed="0.012158"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-02-14T15:14:54.085964" level="INFO">Slept 5 seconds.</msg>
+<arg>5</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-02-14T15:14:49.083996" elapsed="5.002296"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>//*[@id="comp-lt33fcq1"]</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.086867" elapsed="0.022412"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:54.110235" level="INFO">Typing text 'firstName' into text field '//*[@id="input_comp-lt33fcq41"]'.</msg>
+<arg>//*[@id="input_comp-lt33fcq41"]</arg>
+<arg>firstName</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.109716" elapsed="0.066719"/>
+</kw>
+<kw name="Get Value" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:54.182333" level="INFO">${firstname} = firstName</msg>
+<var>${firstname}</var>
+<arg>//*[@id="input_comp-lt33fcq41"]</arg>
+<doc>Returns the value attribute of the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.176680" elapsed="0.005694"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${firstname}</arg>
+<arg>firstName</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.182588" elapsed="0.000442"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:54.183320" level="INFO">Typing text 'lastName' into text field '//*[@id="input_comp-lt33fcs1"]'.</msg>
+<arg>//*[@id="input_comp-lt33fcs1"]</arg>
+<arg>lastName</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.183172" elapsed="0.026578"/>
+</kw>
+<kw name="Get Value" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:54.215819" level="INFO">${lastName} = lastName</msg>
+<var>${lastName}</var>
+<arg>//*[@id="input_comp-lt33fcs1"]</arg>
+<doc>Returns the value attribute of the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.210024" elapsed="0.005842"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${lastName}</arg>
+<arg>lastName</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.216083" elapsed="0.000456"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:54.216849" level="INFO">Typing text '000000000' into text field '//*[@id="input_comp-lt33fcsi1"]'.</msg>
+<arg>//*[@id="input_comp-lt33fcsi1"]</arg>
+<arg>000000000</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.216690" elapsed="0.026999"/>
+</kw>
+<kw name="Get Value" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:54.248452" level="INFO">${phone} = 000000000</msg>
+<var>${phone}</var>
+<arg>//*[@id="input_comp-lt33fcsi1"]</arg>
+<doc>Returns the value attribute of the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.243892" elapsed="0.004596"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${phone}</arg>
+<arg>000000000</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.248650" elapsed="0.000355"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:54.249264" level="INFO">Typing text 'studentName@chula.ac.th' into text field '//*[@id="input_comp-lt33fcsf1"]'.</msg>
+<arg>//*[@id="input_comp-lt33fcsf1"]</arg>
+<arg>studentName@chula.ac.th</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.249133" elapsed="0.052562"/>
+</kw>
+<kw name="Get Value" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:54.307780" level="INFO">${emailAddress} = studentName@chula.ac.th</msg>
+<var>${emailAddress}</var>
+<arg>//*[@id="input_comp-lt33fcsf1"]</arg>
+<doc>Returns the value attribute of the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.301898" elapsed="0.005932"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${emailAddress}</arg>
+<arg>studentName@chula.ac.th</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.308035" elapsed="0.000350"/>
+</kw>
+<kw name="Execute Javascript" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:54.308978" level="INFO">Executing JavaScript:
+window.scrollTo(0, document.body.scrollHeight)
+Without any arguments.</msg>
+<arg>window.scrollTo(0, document.body.scrollHeight)</arg>
+<doc>Executes the given JavaScript code with possible arguments.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.308595" elapsed="0.003196"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-02-14T15:14:55.312598" level="INFO">Slept 1 second.</msg>
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-02-14T15:14:54.312051" elapsed="1.000868"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:55.314080" level="INFO">Clicking element '//*[@id="collection_comp-lt33fcsl1"]'.</msg>
+<arg>//*[@id="collection_comp-lt33fcsl1"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:55.313516" elapsed="0.043042"/>
+</kw>
+<kw name="Wait Until Element Contains" owner="SeleniumLibrary">
+<arg>//*[@id="menuitem-1"]</arg>
+<arg>2</arg>
+<doc>Waits until the element ``locator`` contains ``text``.</doc>
+<status status="PASS" start="2026-02-14T15:14:55.356779" elapsed="0.006495"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:55.363676" level="INFO">Clicking element '//*[@id="menuitem-1"]'.</msg>
+<arg>//*[@id="menuitem-1"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:55.363484" elapsed="0.022744"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:55.386586" level="INFO">Clicking element '//div[@data-testid="radioGroup"]//*[text()="Yes"]'.</msg>
+<arg>//div[@data-testid="radioGroup"]//*[text()="Yes"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:55.386421" elapsed="0.028172"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:55.415130" level="INFO">Typing text 'note' into text field '//*[@id="input_comp-lt33fct3"]'.</msg>
+<arg>//*[@id="input_comp-lt33fct3"]</arg>
+<arg>note</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:55.414876" elapsed="0.019622"/>
+</kw>
+<kw name="Get Value" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:55.439794" level="INFO">${note} = note</msg>
+<var>${note}</var>
+<arg>//*[@id="input_comp-lt33fct3"]</arg>
+<doc>Returns the value attribute of the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:55.434717" elapsed="0.005116"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${note}</arg>
+<arg>note</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-02-14T15:14:55.440058" elapsed="0.000419"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:55.440801" level="INFO">Clicking element '//*[@id="comp-ltubl84u"]'.</msg>
+<arg>//*[@id="comp-ltubl84u"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:55.440645" elapsed="0.024733"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-02-14T15:14:55.465836" level="INFO">Clicking element '//*[@class="l7_2fn wixui-button__label"]'.</msg>
+<arg>//*[@class="l7_2fn wixui-button__label"]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-02-14T15:14:55.465619" elapsed="0.018513"/>
+</kw>
+<kw name="Close All Browsers" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2026-02-14T15:14:55.484551" elapsed="0.234396"/>
+</kw>
+<tag>All Input</tag>
+<status status="PASS" start="2026-02-14T15:14:47.813603" elapsed="7.905531"/>
+</test>
+<status status="PASS" start="2026-02-14T15:14:47.735044" elapsed="7.984616"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">All Input</stat>
+</tag>
+<suite>
+<stat name="Hotel Booking" id="s1" pass="1" fail="0" skip="0">Hotel Booking</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
