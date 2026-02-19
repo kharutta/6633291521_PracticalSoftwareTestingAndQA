@@ -34,7 +34,7 @@ Verify registration form with single fault firstname
     Verify numberOfAdult is empty
     Click accept term
     Click submit form
-    Verify missing input message
+    Verify missing input message    input_comp-lt33fcq41    ${test_data_missing_input_message}
 
 Verify registration form with single fault lastname
     [Tags]     single fault lastname
@@ -48,7 +48,7 @@ Verify registration form with single fault lastname
     Verify numberOfAdult is empty
     Click accept term
     Click submit form
-    Verify missing input message
+    Verify Missing Input message    input_comp-lt33fcs1    ${test_data_missing_input_message}
 
 Verify registration form with single fault phone
     [Tags]     single fault phone
@@ -62,7 +62,7 @@ Verify registration form with single fault phone
     Verify numberOfAdult is empty
     Click accept term
     Click submit form
-    Verify missing input message
+    Verify missing input message    input_comp-lt33fcsi1    ${test_data_missing_input_message}
 
 Verify registration form with single fault email
     [Tags]     single fault email
@@ -76,7 +76,7 @@ Verify registration form with single fault email
     Verify numberOfAdult is empty
     Click accept term
     Click submit form
-    Verify missing input message
+    Verify missing input message    input_comp-lt33fcsf1    ${test_data_missing_input_message}
 
 Verify registration form with single fault numberOfAdult
     [Tags]     single fault numberOfAdult
@@ -90,4 +90,20 @@ Verify registration form with single fault numberOfAdult
     Verify numberOfAdult is empty
     Click accept term
     Click submit form
-    Verify missing input message
+    Verify missing input message   collection_comp-lt33fcsl1    ${test_data_missing_dropdown_option_message}
+
+Verify registration form with wrong email format
+    [Tags]    All Input
+    Open browser registration form
+    Wait registration load complete
+    Input and verify firstname
+    Input and verify lastname
+    Input and verify phone
+    Input and verify email with format check
+    Scroll to bottom and wait
+    Select and verify numberOfAdult
+    Select pet option
+    Select and verify note
+    Click accept term
+    Click submit form
+    Verify missing input message    input_comp-lt33fcsf1    ${test_data_invalid_email_message}

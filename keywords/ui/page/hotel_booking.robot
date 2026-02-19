@@ -52,6 +52,12 @@ Input and verify email
     ${emailAddress}=    Get Value    //*[@id="input_comp-lt33fcsf1"]
     Should Be Equal    ${emailAddress}    ${hotel_booking_email}
 
+Input and verify email with format check
+    Input text    //*[@id="input_comp-lt33fcsf1"]    ${hotel_booking_email_invalid}
+    ${emailAddress}=    Get Value    //*[@id="input_comp-lt33fcsf1"]
+    ${isValid}=    Run Keyword And Return Status    Should Match Regexp    ${emailAddress}    ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$
+    Should Be True    ${isValid}    Email format is invalid: ${emailAddress}
+
 Verify numberOfAdult is empty
     ${numberOfAdult}=    Get Value    //*[@id="collection_comp-lt33fcsl1"]
     Should Be Equal    ${numberOfAdult}    ${EMPTY}
@@ -77,9 +83,10 @@ Click accept term
 Click submit form
     Click Element  //*[@class="l7_2fn wixui-button__label"]
 
-
 Verify success submit message
     Wait Until Element Contains    xpath=//*[contains(text(),'Thanks for submitting!')]    ${test_data_sccess_submit_message}
 
 Verify missing input message
-    Wait Until Element Contains    xpath=//*[contains(text(),'Please complete the booking form.')]    ${test_data_missing_input_message}
+    [Arguments]    ${element_id}    ${expected_message}
+    ${message}=    Execute Javascript    return document.getElementById("${element_id}").validationMessage;
+    Should Be Equal    ${message}    ${expected_message}
