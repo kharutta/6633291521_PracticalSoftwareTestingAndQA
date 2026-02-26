@@ -1,0 +1,10 @@
+[
+  {
+    "accountNumber": "123456",
+    "pin": "1234"
+  },
+  {
+    "accountNumber": "345678",
+    "pin": "9999"
+  }
+]
