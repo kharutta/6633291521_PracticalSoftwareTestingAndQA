@@ -132,4 +132,15 @@ test.describe("Test transfer", () => {
       page.getByRole("button", { name: "โอนเงิน ฿" }),
     ).toBeDisabled();
   });
+
+  test("Verify transfer fail with remark exceeding limit", async ({ page }) => {
+    const transfer = new TransferPage(page);
+    const result = await transfer.transferWithExcessiveRemark({
+      account: "123456",
+      amount: "100",
+      note: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    });
+    expect(result.isLimited).toBe(true);
+    expect(result.actualValue.length).toBeLessThanOrEqual(50);
+  });
 });

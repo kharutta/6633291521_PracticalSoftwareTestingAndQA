@@ -38,4 +38,20 @@ export class TransferPage {
     await amountInput.fill(amount);
     return amountInput;
   }
+
+  async transferWithExcessiveRemark({ account, amount, note }) {
+    await this.open();
+    const remarkField = this.page.getByRole("textbox", {
+      name: "เช่น เงินค่าอาหาร, ค่าเช่าบ้าน",
+    });
+    await remarkField.click();
+    await remarkField.fill(note);
+
+    const actualValue = await remarkField.inputValue();
+    return {
+      originalNote: note,
+      actualValue: actualValue,
+      isLimited: actualValue.length <= 50 && note.length > 50,
+    };
+  }
 }
