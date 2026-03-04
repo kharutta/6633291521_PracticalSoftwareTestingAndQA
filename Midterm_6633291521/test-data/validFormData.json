@@ -1,0 +1,18 @@
+{
+  "firstName": "Ingkharut",
+  "lastName": "RuttanaOpha",
+  "email": "6633291521@student.chula.ac.th",
+  "gender": "Female",
+  "mobileNumber": "0812345678",
+  "dateOfBirth": {
+    "year": "2004",
+    "month": "1",
+    "day": "21"
+  },
+  "subjects": "Maths",
+  "hobbies": ["Music", "Reading"],
+  "picturePath": "../test-data/er_final.png",
+  "address": "221B",
+  "state": "NCR",
+  "city": "Delhi"
+}
