@@ -2,6 +2,7 @@ import { fillInputField } from "./inputFieldHelper";
 import { navigateToForm } from "./navigateToForm";
 import { expect } from "@playwright/test";
 import message from "../test-data/message.json";
+import inputFieldInfo from "../test-data/input_field_info.json";
 
 export async function validateMandatoryField(page, fieldSelector, validInputs) {
   await navigateToForm(page);
@@ -9,11 +10,13 @@ export async function validateMandatoryField(page, fieldSelector, validInputs) {
   for (const input of validInputs) {
     await fillInputField(page, input.role, input.name, input.value);
   }
-  await page.getByRole("button", { name: "Submit" }).click();
+  await page
+    .getByRole(inputFieldInfo.submitButton.role, {
+      name: inputFieldInfo.submitButton.name,
+    })
+    .click();
 
-  await expect(
-    page.getByText(message.submitSuccess),
-  ).not.toBeVisible();
+  await expect(page.getByText(message.submitSuccess)).not.toBeVisible();
 
   await expect(page.locator(fieldSelector)).toHaveCSS(
     "border-color",
@@ -31,7 +34,11 @@ export async function validateFormat(page, fieldSelector, validInputs) {
   for (const input of validInputs) {
     await fillInputField(page, input.role, input.name, input.value);
   }
-  await page.getByRole("button", { name: "Submit" }).click();
+  await page
+    .getByRole(inputFieldInfo.submitButton.role, {
+      name: inputFieldInfo.submitButton.name,
+    })
+    .click();
   const isValid = validInputs.every((input) => input.format.test(input.value));
   if (isValid) {
     await expect(page.locator(fieldSelector)).toHaveCSS(

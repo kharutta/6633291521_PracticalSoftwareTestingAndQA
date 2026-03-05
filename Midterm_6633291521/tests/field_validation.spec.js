@@ -5,6 +5,7 @@ import message from "../test-data/message.json";
 import { navigateToForm } from "../page-objects/navigateToForm";
 import { validateMandatoryField } from "../page-objects/fieldValidationHelpers";
 import path from "path";
+import inputFieldInfo from "../test-data/input_field_info.json";
 
 describe("Fields Validation", () => {
   test("Verify that a user can successfully submit the form with all valid data.", async ({
@@ -19,24 +20,22 @@ describe("Fields Validation", () => {
       picturePath: path.resolve(__dirname, validFormData.picturePath[0]),
     });
 
-    await expect(
-      page.getByText(message.submitSuccess),
-    ).toBeVisible();
+    await expect(page.getByText(message.submitSuccess)).toBeVisible();
   });
 
   test("Verify that the form cannot be submitted if mandatory fields (First Name) are blank.", async ({
     page,
   }) => {
-    await validateMandatoryField(page, "#firstName", [
+    await validateMandatoryField(page, inputFieldInfo.firstName.locator, [
       {
-        role: "textbox",
-        name: "Last Name",
+        role: inputFieldInfo.lastName.role,
+        name: inputFieldInfo.lastName.name,
         value: validFormData.lastName,
       },
       { role: "radio", name: validFormData.gender[1], value: null },
       {
-        role: "textbox",
-        name: "Mobile Number",
+        role: inputFieldInfo.mobileNumber.role,
+        name: inputFieldInfo.mobileNumber.name,
         value: validFormData.mobileNumber,
       },
     ]);
@@ -45,16 +44,16 @@ describe("Fields Validation", () => {
   test("Verify that the form cannot be submitted if mandatory fields (Last Name) are blank.", async ({
     page,
   }) => {
-    await validateMandatoryField(page, "#lastName", [
+    await validateMandatoryField(page, inputFieldInfo.lastName.locator, [
       {
-        role: "textbox",
-        name: "First Name",
+        role: inputFieldInfo.firstName.role,
+        name: inputFieldInfo.firstName.name,
         value: validFormData.firstName,
       },
       { role: "radio", name: validFormData.gender[1], value: null },
       {
-        role: "textbox",
-        name: "Mobile Number",
+        role: inputFieldInfo.mobileNumber.role,
+        name: inputFieldInfo.mobileNumber.name,
         value: validFormData.mobileNumber,
       },
     ]);
@@ -65,18 +64,18 @@ describe("Fields Validation", () => {
   }) => {
     await validateMandatoryField(page, "#gender-radio-1", [
       {
-        role: "textbox",
-        name: "First Name",
+        role: inputFieldInfo.firstName.role,
+        name: inputFieldInfo.firstName.name,
         value: validFormData.firstName,
       },
       {
-        role: "textbox",
-        name: "Last Name",
+        role: inputFieldInfo.lastName.role,
+        name: inputFieldInfo.lastName.name,
         value: validFormData.lastName,
       },
       {
-        role: "textbox",
-        name: "Mobile Number",
+        role: inputFieldInfo.mobileNumber.role,
+        name: inputFieldInfo.mobileNumber.name,
         value: validFormData.mobileNumber,
       },
     ]);
@@ -85,15 +84,15 @@ describe("Fields Validation", () => {
   test("Verify that the form cannot be submitted if mandatory fields (Mobile) are blank.", async ({
     page,
   }) => {
-    await validateMandatoryField(page, "#userNumber", [
+    await validateMandatoryField(page, inputFieldInfo.mobileNumber.locator, [
       {
-        role: "textbox",
-        name: "First Name",
+        role: inputFieldInfo.firstName.role,
+        name: inputFieldInfo.firstName.name,
         value: validFormData.firstName,
       },
       {
-        role: "textbox",
-        name: "Last Name",
+        role: inputFieldInfo.lastName.role,
+        name: inputFieldInfo.lastName.name,
         value: validFormData.lastName,
       },
       { role: "radio", name: validFormData.gender[1], value: null },

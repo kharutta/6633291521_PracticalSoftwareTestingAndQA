@@ -11,10 +11,10 @@
   },
   "monthOfBirth": ["February", "Feb"],
   "subjects": ["Maths", "Physics"],
-  "hobbies": ["Music", "Reading"],
+  "hobbies": ["Sports", "Reading", "Music"],
   "picturePath": [
-    "../test-data/png_example.png",
-    "../test-data/jpg_example.jpg"
+    "../test-data/example_png.png",
+    "../test-data/example_jpg.jpg"
   ],
   "address": "221B Baker Street\nLondon\nNW1 6XE",
   "state": "NCR",

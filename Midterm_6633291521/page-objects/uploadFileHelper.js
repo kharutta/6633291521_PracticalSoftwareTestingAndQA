@@ -1,3 +1,5 @@
+import inputFieldInfo from "../test-data/input_field_info.json";
+
 const path = require("path");
 
 export async function uploadFileToForm(page, filePath) {
@@ -5,7 +7,8 @@ export async function uploadFileToForm(page, filePath) {
   const resolvedPath = path.isAbsolute(filePath)
     ? filePath
     : path.resolve(__dirname, filePath);
-  await page.setInputFiles('input[type="file"]', resolvedPath);
-  const fileName = await page.locator('input[type="file"]').inputValue();
+  const fileInputLocator = inputFieldInfo.picturePath.locator;
+  await page.setInputFiles(fileInputLocator, resolvedPath);
+  const fileName = await page.locator(fileInputLocator).inputValue();
   return fileName;
 }
