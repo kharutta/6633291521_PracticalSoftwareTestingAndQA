@@ -2,17 +2,21 @@
   "firstName": "Ingkharut",
   "lastName": "RuttanaOpha",
   "email": "6633291521@student.chula.ac.th",
-  "gender": "Female",
+  "gender": ["Male", "Female", "Other"],
   "mobileNumber": "0812345678",
   "dateOfBirth": {
     "year": "2004",
     "month": "1",
     "day": "21"
   },
-  "subjects": "Maths",
+  "monthOfBirth": ["February", "Feb"],
+  "subjects": ["Maths", "Physics"],
   "hobbies": ["Music", "Reading"],
-  "picturePath": "../test-data/er_final.png",
-  "address": "221B",
+  "picturePath": [
+    "../test-data/png_example.png",
+    "../test-data/jpg_example.jpg"
+  ],
+  "address": "221B Baker Street\nLondon\nNW1 6XE",
   "state": "NCR",
   "city": "Delhi"
 }

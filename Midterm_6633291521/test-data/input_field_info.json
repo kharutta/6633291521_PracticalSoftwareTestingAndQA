@@ -1,0 +1,65 @@
+{
+  "firstName": {
+    "locator": "#firstName",
+    "role": "textbox",
+    "name": "First Name",
+    "format": "^[A-Za-z]+$"
+  },
+  "lastName": {
+    "locator": "#lastName",
+    "role": "textbox",
+    "name": "Last Name",
+    "format": "^[A-Za-z]+$"
+  },
+  "email": {
+    "locator": "#userEmail",
+    "role": "textbox",
+    "name": "name@example.com",
+    "format": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
+  },
+  "mobileNumber": {
+    "locator": "#userNumber",
+    "role": "textbox",
+    "name": "Mobile Number",
+    "format": "^\\d{10}$"
+  },
+  "dateOfBirth": {
+    "year": {
+      "locator": ".react-datepicker__year-select"
+    },
+    "month": {
+      "locator": ".react-datepicker__month-select"
+    },
+    "day": {
+      "locator": ".react-datepicker__day--0"
+    },
+    "format": "^\\d{2} [A-Za-z]{3} \\d{4}$"
+  },
+  "subjects": {
+    "locator": "#subjectsInput"
+  },
+  "address": {
+    "locator": "#currentAddress",
+    "role": "textbox",
+    "name": "Current Address",
+    "format": "^[A-Za-z0-9 \n]+$"
+  },
+  "city": {
+    "locator": "#city",
+    "role": "option"
+  },
+  "state": {
+    "locator": "#state",
+    "role": "option"
+  },
+  "picturePath": {
+    "locator": "input[type=\"file\"]",
+    "role": "button",
+    "name": "Choose File"
+  },
+  "submitButton": {
+    "locator": "#submit",
+    "role": "button",
+    "name": "Submit"
+  }
+}

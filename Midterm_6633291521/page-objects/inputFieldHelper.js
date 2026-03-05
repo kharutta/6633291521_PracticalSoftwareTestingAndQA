@@ -1,4 +1,4 @@
-async function fillInputField(page, role, name, value, format) {
+export async function fillInputField(page, role, name, value) {
   const input = await page.getByRole(role, { name });
   await input.click();
   if (role !== "radio") {
@@ -6,13 +6,7 @@ async function fillInputField(page, role, name, value, format) {
   }
 }
 
-async function validateInputField(page, role, name, value, errorMessage) {
-  await fillInputField(page, role, name, value);
-  const error = await page.getByText(errorMessage);
-  await expect(error).toBeVisible();
-}
-
-async function fillForm(page, formData) {
+export async function fillForm(page, formData) {
   const {
     firstName,
     lastName,
@@ -28,23 +22,11 @@ async function fillForm(page, formData) {
     city,
   } = formData;
 
-  await fillInputField(page, "textbox", "First Name", firstName, /^[A-Za-z]+$/);
-  await fillInputField(page, "textbox", "Last Name", lastName, /^[A-Za-z]+$/);
-  await fillInputField(
-    page,
-    "textbox",
-    "name@example.com",
-    email,
-    /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
-  );
-  await fillInputField(page, "radio", gender, null);
-  await fillInputField(
-    page,
-    "textbox",
-    "Mobile Number",
-    mobileNumber,
-    /^\d{10}$/,
-  );
+  await fillInputField(page, "textbox", "First Name", firstName);
+  await fillInputField(page, "textbox", "Last Name", lastName);
+  await fillInputField(page, "textbox", "name@example.com", email);
+  await fillInputField(page, "radio", gender);
+  await fillInputField(page, "textbox", "Mobile Number", mobileNumber);
 
   await page.locator("#dateOfBirthInput").click();
   await page
@@ -59,7 +41,7 @@ async function fillForm(page, formData) {
     )
     .click();
 
-  await page.locator(".subjects-auto-complete__input-container").click();
+  await page.locator("#subjectsInput").click();
   await page.locator("#subjectsInput").fill(subjects);
   await page.getByRole("option", { name: subjects }).click();
 
@@ -82,5 +64,3 @@ async function fillForm(page, formData) {
 
   await page.getByRole("button", { name: "Submit" }).click();
 }
-
-module.exports = { fillInputField, validateInputField, fillForm };

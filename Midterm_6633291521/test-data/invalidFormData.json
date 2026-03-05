@@ -1,0 +1,7 @@
+{
+  "firstName": ["abc123", "abc@!#"],
+  "lastName": ["abc123", "abc@!#"],
+  "email": ["6633291521.ac.th", "6633291521@"],
+  "mobileNumber": ["08123", "081234abcd"],
+  "picturePath": "../test-data/heic_example.heic"
+}
