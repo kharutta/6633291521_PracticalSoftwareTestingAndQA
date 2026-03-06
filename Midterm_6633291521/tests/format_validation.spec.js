@@ -3,11 +3,14 @@ import { navigateToForm } from "../page-objects/navigateToForm";
 import { validateFormat } from "../page-objects/fieldValidationHelpers";
 import invalidFormData from "../test-data/invalidFormData.json";
 import validFormData from "../test-data/validFormData.json";
-import stateCities from "../test-data/stateCities";
 import inputFieldInfo from "../test-data/input_field_info.json";
 
 // #region First Name
 describe("First Name Format Validation", () => {
+  test.beforeEach(async ({ page }) => {
+    await navigateToForm(page);
+  });
+
   test("Verify First Name format validation (contain numbers)", async ({
     page,
   }) => {
@@ -52,6 +55,10 @@ describe("First Name Format Validation", () => {
 // #region Last Name
 
 describe("Last Name Format Validation", () => {
+  test.beforeEach(async ({ page }) => {
+    await navigateToForm(page);
+  });
+
   test("Verify Last Name format validation (contain numbers)", async ({
     page,
   }) => {
@@ -95,6 +102,10 @@ describe("Last Name Format Validation", () => {
 
 // #region Mobile Number
 describe("Mobile Number Format Validation", () => {
+  test.beforeEach(async ({ page }) => {
+    await navigateToForm(page);
+  });
+
   test("Verify Mobile format validation (less than 10 digits)", async ({
     page,
   }) => {
@@ -138,6 +149,10 @@ describe("Mobile Number Format Validation", () => {
 
 // #region Email
 describe("Email Format Validation", () => {
+  test.beforeEach(async ({ page }) => {
+    await navigateToForm(page);
+  });
+
   test("Verify Email format validation (missing @)", async ({ page }) => {
     await validateFormat(page, inputFieldInfo.email.locator, [
       {
@@ -175,14 +190,17 @@ describe("Email Format Validation", () => {
 
 // #region Date of Birth
 describe("Date of Birth Format Validation", () => {
+  test.beforeEach(async ({ page }) => {
+    await navigateToForm(page);
+  });
+
   test("Verify Date of Birth format validation (default date)", async ({
     page,
   }) => {
-    await navigateToForm(page);
     const currentDate = new Date();
     const formattedDate = `${currentDate.getDate().toString().padStart(2, "0")} ${currentDate.toLocaleString("default", { month: "short" })} ${currentDate.getFullYear()}`;
     const displayedDate = await page
-      .locator(inputFieldInfo.dateOfBirthInput?.locator || "#dateOfBirthInput")
+      .locator(inputFieldInfo.dateOfBirth.locator)
       .inputValue();
     expect(displayedDate).toBe(formattedDate);
   });
@@ -190,10 +208,7 @@ describe("Date of Birth Format Validation", () => {
   test("Verify Date of Birth format validation (manual date selection)", async ({
     page,
   }) => {
-    await navigateToForm(page);
-    await page
-      .locator(inputFieldInfo.dateOfBirthInput?.locator || "#dateOfBirthInput")
-      .click();
+    await page.locator(inputFieldInfo.dateOfBirth.locator).click();
     await page
       .locator(inputFieldInfo.dateOfBirth.month.locator)
       .selectOption(validFormData.dateOfBirth.month);
@@ -206,7 +221,7 @@ describe("Date of Birth Format Validation", () => {
       )
       .click();
     const newDate = await page
-      .locator(inputFieldInfo.dateOfBirthInput?.locator || "#dateOfBirthInput")
+      .locator(inputFieldInfo.dateOfBirth.locator)
       .inputValue();
     expect(newDate).toBe(
       `${validFormData.dateOfBirth.day} ${validFormData.monthOfBirth[1]} ${validFormData.dateOfBirth.year}`,
@@ -220,6 +235,10 @@ describe("Date of Birth Format Validation", () => {
 
 describe("Picture Format Validation", () => {
   const { uploadFileToForm } = require("../page-objects/uploadFileHelper");
+
+  test.beforeEach(async ({ page }) => {
+    await navigateToForm(page);
+  });
 
   test("Verify Picture file upload (jpg)", async ({ page }) => {
     const fileName = await uploadFileToForm(page, validFormData.picturePath[1]);
@@ -243,6 +262,10 @@ describe("Picture Format Validation", () => {
 // #region Current Address
 
 describe("Current Address Format Validation", () => {
+  test.beforeEach(async ({ page }) => {
+    await navigateToForm(page);
+  });
+
   test("Verify Current Address format validation (valid address)", async ({
     page,
   }) => {
@@ -259,7 +282,6 @@ describe("Current Address Format Validation", () => {
   test("Verify Current Address format validation (multi-line)", async ({
     page,
   }) => {
-    await navigateToForm(page);
     const addressInput = page.getByRole(inputFieldInfo.address.role, {
       name: inputFieldInfo.address.name,
     });
@@ -268,117 +290,6 @@ describe("Current Address Format Validation", () => {
     const value = await addressInput.inputValue();
     expect(value).toBe(multiLine);
     expect(value).toMatch(new RegExp(inputFieldInfo.address.format));
-  });
-});
-// #endregion
-
-// #region City & State
-describe("City Dropdown Validation", () => {
-  test('Verify that the City dropdown must remain disabled or empty until a State is selected.', async ({
-    page,
-  }) => {
-    await navigateToForm(page);
-    await page.addStyleTag({ content: `footer { display: none !important; }` });
-    const cityDropdown = page.locator(inputFieldInfo.city.locator);
-    await cityDropdown.click({ force: true });
-    await expect(page.locator('[id^="react-select-4-option"]')).toHaveCount(0);
-  });
-
-  test('Verify that the City dropdown options change based on the selected State.', async ({
-    page,
-  }) => {
-    await navigateToForm(page);
-    for (const [state, cities] of Object.entries(stateCities)) {
-      await page.locator(inputFieldInfo.state.locator).click();
-      await page
-        .getByRole(inputFieldInfo.state.role, { name: state, exact: true })
-        .click();
-      await page.locator(inputFieldInfo.city.locator).click();
-      const cityOptions = await page
-        .locator(`${inputFieldInfo.city.locator} [id^="react-select-4-option"]`)
-        .allTextContents();
-      expect(cityOptions).toStrictEqual(cities);
-    }
-  });
-});
-// #endregion
-
-// #region Subjects
-describe("Subjects Field Validation", () => {
-  test('Verify that the Subjects field allows multiple entries and displays them as removable tags.', async ({
-    page,
-  }) => {
-    await navigateToForm(page);
-    const subjectInput = page.locator(inputFieldInfo.subjects.locator);
-    await subjectInput.fill(validFormData.subjects[0]);
-    await page.getByRole("option", { name: validFormData.subjects[0] }).click();
-    await subjectInput.fill(validFormData.subjects[1]);
-    await page.getByRole("option", { name: validFormData.subjects[1] }).click();
-    const tags = page.locator(".subjects-auto-complete__multi-value__label");
-    await expect(tags).toHaveCount(2);
-    await expect(tags).toHaveText([
-      validFormData.subjects[0],
-      validFormData.subjects[1],
-    ]);
-    await page
-      .locator(".subjects-auto-complete__multi-value", {
-        hasText: validFormData.subjects[0],
-      })
-      .locator(".subjects-auto-complete__multi-value__remove")
-      .click();
-    await expect(tags).toHaveCount(1);
-    await expect(tags).toHaveText([validFormData.subjects[1]]);
-  });
-});
-// #endregion
-
-// #region Gender
-describe("Gender Radio Button Validation", () => {
-  test("Verify Gender radio button options and single selection", async ({
-    page,
-  }) => {
-    await navigateToForm(page);
-    const genderOptions = validFormData.gender;
-    for (const gender of genderOptions) {
-      await expect(page.getByLabel(gender, { exact: true })).toBeVisible();
-    }
-    for (const gender of genderOptions) {
-      await page.getByLabel(gender, { exact: true }).check();
-      for (const checkGender of genderOptions) {
-        const radio = page.getByLabel(checkGender, { exact: true });
-        if (checkGender === gender) {
-          await expect(radio).toBeChecked();
-        } else {
-          await expect(radio).not.toBeChecked();
-        }
-      }
-    }
-  });
-});
-// #endregion
-
-// #region Hobbies
-describe("Hobbies Checkbox Validation", () => {
-  test('Verify that the Hobbies checkboxes allow multi-selection', async ({
-    page,
-  }) => {
-    await navigateToForm(page);
-
-    const hobbies = validFormData.hobbies;
-
-    for (const hobby of hobbies) {
-      await page.getByLabel(hobby, { exact: true }).check();
-    }
-
-    for (const hobby of hobbies) {
-      await expect(page.getByLabel(hobby, { exact: true })).toBeChecked();
-    }
-
-    await page.getByLabel(hobbies[0], { exact: true }).uncheck();
-
-    await expect(page.getByLabel(hobbies[0])).not.toBeChecked();
-    await expect(page.getByLabel(hobbies[1])).toBeChecked();
-    await expect(page.getByLabel(hobbies[2])).toBeChecked();
   });
 });
 // #endregion

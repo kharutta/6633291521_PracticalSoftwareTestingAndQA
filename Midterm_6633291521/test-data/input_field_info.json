@@ -23,7 +23,12 @@
     "name": "Mobile Number",
     "format": "^\\d{10}$"
   },
+  "gender": {
+    "locator": "#gender-radio-1",
+    "role": "radio"
+  },
   "dateOfBirth": {
+    "locator": "#dateOfBirthInput",
     "year": {
       "locator": ".react-datepicker__year-select"
     },
@@ -36,7 +41,8 @@
     "format": "^\\d{2} [A-Za-z]{3} \\d{4}$"
   },
   "subjects": {
-    "locator": "#subjectsInput"
+    "locator": "#subjectsInput",
+    "role": "option"
   },
   "address": {
     "locator": "#currentAddress",
@@ -61,5 +67,9 @@
     "locator": "#submit",
     "role": "button",
     "name": "Submit"
+  },
+  "closeButton": {
+    "role": "button",
+    "name": "Close"
   }
 }

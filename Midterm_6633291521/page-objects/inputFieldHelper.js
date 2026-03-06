@@ -1,9 +1,14 @@
 import inputFieldInfo from "../test-data/input_field_info.json";
 
 export async function fillInputField(page, role, name, value) {
-  const input = await page.getByRole(role, { name });
-  await input.click();
-  if (role !== "radio") {
+  if (role === "radio") {
+    if (name && name.trim()) {
+      const input = await page.getByRole(role, { name });
+      await input.click();
+    }
+  } else {
+    const input = await page.getByRole(role, { name });
+    await input.click();
     await input.fill(value);
   }
 }
@@ -50,9 +55,7 @@ export async function fillForm(page, formData) {
     mobileNumber,
   );
 
-  await page
-    .locator(inputFieldInfo.dateOfBirthInput?.locator || "#dateOfBirthInput")
-    .click();
+  await page.locator(inputFieldInfo.dateOfBirth.locator).click();
   await page
     .locator(inputFieldInfo.dateOfBirth.year.locator)
     .selectOption(dateOfBirth.year);
@@ -67,7 +70,9 @@ export async function fillForm(page, formData) {
 
   await page.locator(inputFieldInfo.subjects.locator).click();
   await page.locator(inputFieldInfo.subjects.locator).fill(subjects);
-  await page.getByRole("option", { name: subjects }).click();
+  await page
+    .getByRole(inputFieldInfo.subjects.role, { name: subjects })
+    .click();
 
   for (const hobby of hobbies) {
     await page
@@ -81,11 +86,13 @@ export async function fillForm(page, formData) {
       name: inputFieldInfo.picturePath.name,
     })
     .setInputFiles(picturePath);
-  await page
-    .getByRole(inputFieldInfo.address.role, {
-      name: inputFieldInfo.address.name,
-    })
-    .fill(address);
+
+  await fillInputField(
+    page,
+    inputFieldInfo.address.role,
+    inputFieldInfo.address.name,
+    address,
+  );
 
   await page.locator(inputFieldInfo.state.locator).click();
   await page.getByRole(inputFieldInfo.state.role, { name: state }).click();
