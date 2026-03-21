@@ -1,7 +1,7 @@
 info:
   name: Post Orders - Valid
   type: http
-  seq: 1
+  seq: 6
 
 http:
   method: POST

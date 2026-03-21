@@ -1,7 +1,7 @@
 info:
   name: Post Orders - Invalid Quantity (Out of stock)
   type: http
-  seq: 3
+  seq: 7
 
 http:
   method: POST

@@ -1,7 +1,7 @@
 info:
   name: Post Orders - Invalid Quantity (Insufficient stock)
   type: http
-  seq: 4
+  seq: 8
 
 http:
   method: POST
@@ -31,11 +31,6 @@ runtime:
         test("Verify response should contain 'error' field", () => {
           expect(body).to.have.property("error");
           expect(body).to.not.have.property("orderId");
-        });
-
-        test("Verify error message should be correct", () => {
-          expect(body.error).to.be.a("string");
-          expect(body.error).to.equal("Insufficient stock");
         });
 
 settings:

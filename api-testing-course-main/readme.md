@@ -2,7 +2,7 @@
 
 ## Summary of Bugs Discovered
 
-### Bug 1: Auth Login Returns 401 Instead of 400 for Missing Credentials
+### Bug 1: Auth Login returns 401 instead of 400 for missing credentials
 
 **Affected Endpoints:**
 
@@ -12,7 +12,7 @@
 **How to detect:**  
 When a login request is submitted with a missing username or missing password, the API returns HTTP `401 UNAUTHORIZED` instead of the expected `400 BAD REQUEST`. Missing fields should return a `400` status, not a `401`.
 
-### Bug 2: Post Orders — Incorrect `totalPrice` Calculation
+### Bug 2: Post Orders — Incorrect totalPrice calculation
 
 **Affected Endpoint:**
 
@@ -21,7 +21,7 @@ When a login request is submitted with a missing username or missing password, t
 **How to detect:**  
 When placing a valid order (eg. 2 items, price 50 for each), the API returns a `totalPrice` of 95 instead of the expected 100.
 
-### Bug 3: Post Orders — Insufficient Stock Not Handled Correctly
+### Bug 3: Post Orders — Insufficient stock not handled correctly
 
 **Affected Endpoint:**
 
@@ -32,7 +32,7 @@ When an order is placed with a quantity that exceeds available stock, the API re
 
 ---
 
-### Bug 4: Post Orders — Missing Item ID Returns 404 Instead of 400
+### Bug 4: Post Orders — Missing item ID returns 404 instead of 400
 
 **Affected Endpoint:**
 
@@ -43,7 +43,29 @@ When an order is submitted without an item ID, the API returns `404 NOT FOUND` i
 
 ---
 
-### Bug 5: Get Order — Invalid Order ID Returns 200 Instead of Error
+### Bug 5: Post Orders — Missing quantity returns 500 instead of 400
+
+**Affected Endpoint:**
+
+- `Post Orders` — Missing Quantity
+
+**How to detect:**  
+When an order is submitted without a quantity, the API returns `500 INTERNAL SERVER ERROR` instead of the expected `400 BAD REQUEST`. A missing required parameter should be treated as a bad request.
+
+---
+
+### Bug 6: Post Orders — Zero and negative quantity not handled correctly
+
+**Affected Endpoint:**
+
+- `Post Orders` — Post Orders - Invalid Quantity (Non-cardinal)
+
+**How to detect:**  
+When an order is submitted with a non-cardinal number (eg. -2), the API returns `200 OK` and order is placed instead of the expected error status.
+
+---
+
+### Bug 7: Get Order — Invalid order ID returns 200 instead of error
 
 **Affected Endpoint:**
 
@@ -54,7 +76,7 @@ When retrieving an order using an invalid (non-existent) order ID, the API retur
 
 ---
 
-### Bug 6: Get Order — Missing Order ID Returns 404 Instead of 400
+### Bug 8: Get Order — Missing order ID returns 404 instead of 400
 
 **Affected Endpoint:**
 
@@ -63,6 +85,7 @@ When retrieving an order using an invalid (non-existent) order ID, the API retur
 **How to detect:**  
 When a request is made to retrieve an order without providing an order ID, the server returns `404 NOT FOUND` instead of `400 BAD REQUEST`. A missing required parameter should be treated as a bad request, not a not-found error.
 
+---
 ---
 
 # 🍜 API Testing Lab: Auntie Som’s Noodle Stall

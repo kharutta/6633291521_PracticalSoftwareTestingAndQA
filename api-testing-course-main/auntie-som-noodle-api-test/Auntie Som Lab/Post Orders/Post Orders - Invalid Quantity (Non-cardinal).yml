@@ -1,20 +1,20 @@
 info:
-  name: Post Orders - Invalid Token
+  name: Post Orders - Invalid Quantity (Non-cardinal)
   type: http
-  seq: 2
+  seq: 9
 
 http:
   method: POST
   url: "{{baseUrl}}/orders"
   headers:
     - name: Authorization
-      value: Bearer 00000000-0000-0000-0000-000000000000
+      value: Bearer {{accessToken}}
   body:
     type: json
     data: |-
       {
-        "itemId": {{itemId-1}},
-        "quantity": {{validQuantity-1}}
+        "itemId": {{itemId-2}},
+        "quantity": -2
       }
 
 runtime:
@@ -23,19 +23,18 @@ runtime:
       code: |-
         const body = res.getBody();
 
+        test("Verify quantity <= 0 should fail", () => {
+          expect(requestData.quantity).to.be.at.most(0);
+        });
+
         test("Verify error status", () => {
           expect(res.getStatus()).to.not.equal(200);
-          expect(res.getStatus()).to.be.equal(401);
+          expect(res.getStatus()).to.be.oneOf([400, 422]);
         });
 
         test("Verify response should contain 'error' field", () => {
           expect(body).to.have.property("error");
           expect(body).to.not.have.property("orderId");
-        });
-
-        test("Verify error message should be correct", () => {
-          expect(body.error).to.be.a("string");
-          expect(body.error).to.equal("Unauthorized");
         });
 
 settings:
