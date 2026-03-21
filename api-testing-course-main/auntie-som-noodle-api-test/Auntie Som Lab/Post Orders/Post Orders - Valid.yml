@@ -1,0 +1,61 @@
+info:
+  name: Post Orders - Valid
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{baseUrl}}/orders"
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  body:
+    type: json
+    data: |-
+      {
+        "itemId": {{itemId-1}},
+        "quantity": {{validQuantity-1}}
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const body = res.getBody();
+        const expectedPrice = bru.getEnvVar("itemPrice-1") * bru.getEnvVar("validQuantity-1");
+        const orderIdPattern = /^ORD-[a-zA-Z0-9]+$/;
+
+        test("Verify status should be 200", () => {
+          expect(res.getStatus()).to.equal(200);
+        });
+
+        test("Verify response fields", () => {
+          expect(body).to.have.property("orderId");
+          expect(body).to.have.property("status");
+          expect(body).to.have.property("totalPrice");
+        });
+
+        test("Verify response field types", () => {
+          expect(body.orderId).to.be.a("string");
+          expect(body.orderId).to.match(orderIdPattern);
+          expect(body.status).to.be.a("string");
+          expect(body.totalPrice).to.be.a("number");
+        });
+
+        test("Verify status should be 'created'", () => {
+          expect(body.status).to.equal("created");
+        });
+
+        test("Verify totalPrice should match expected", () => {
+          expect(body.totalPrice).to.equal(expectedPrice);
+        });
+
+        bru.setEnvVar("orderId", body.orderId);
+        bru.setEnvVar("orderStatus", body.status);
+        bru.setEnvVar("orderTotalPrice", body.totalPrice);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

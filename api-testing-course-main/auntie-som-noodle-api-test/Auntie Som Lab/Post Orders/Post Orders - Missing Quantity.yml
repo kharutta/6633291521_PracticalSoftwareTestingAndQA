@@ -1,0 +1,32 @@
+info:
+  name: Post Orders - Missing Quantity
+  type: http
+  seq: 7
+
+http:
+  method: POST
+  url: "{{baseUrl}}/orders"
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  body:
+    type: json
+    data: |-
+      {
+        "itemId": {{itemId-1}}
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        test("Verify error status", () => {
+          expect(res.getStatus()).to.not.equal(200);
+          expect(res.getStatus()).to.be.equal(400);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

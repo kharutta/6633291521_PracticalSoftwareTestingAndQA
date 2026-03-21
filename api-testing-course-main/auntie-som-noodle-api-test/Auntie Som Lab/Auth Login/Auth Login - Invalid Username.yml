@@ -1,0 +1,42 @@
+info:
+  name: Auth Login - Invalid Username
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{baseUrl}}/auth/login"
+  body:
+    type: json
+    data: |-
+      {
+        "username": "wrongUser",
+        "password": "hungry"
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const body = res.getBody();
+
+        test("Verify error status", () => {
+          expect(res.getStatus()).to.not.equal(200);
+          expect(res.getStatus()).to.be.oneOf([401, 403]);
+        });
+
+        test("Verify response should contain 'error' field", () => {
+          expect(body).to.have.property("error");
+          expect(body).to.not.have.property("accessToken");
+        });
+
+        test("Verify error message should be correct", () => {
+          expect(body.error).to.be.a("string");
+          expect(body.error).to.equal("Invalid login");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

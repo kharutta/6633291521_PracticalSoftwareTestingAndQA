@@ -1,0 +1,42 @@
+info:
+  name: Post Orders - Missing Token
+  type: http
+  seq: 8
+
+http:
+  method: POST
+  url: "{{baseUrl}}/orders"
+  body:
+    type: json
+    data: |-
+      {
+        "itemId": {{itemId-1}},
+        "quantity": {{validQuantity-1}}
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const body = res.getBody();
+
+        test("Verify error status", () => {
+          expect(res.getStatus()).to.not.equal(200);
+          expect(res.getStatus()).to.be.equal(401);
+        });
+
+        test("Verify response should contain 'error' field", () => {
+          expect(body).to.have.property("error");
+          expect(body).to.not.have.property("orderId");
+        });
+
+        test("Verify error message should be correct", () => {
+          expect(body.error).to.be.a("string");
+          expect(body.error).to.equal("Unauthorized");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

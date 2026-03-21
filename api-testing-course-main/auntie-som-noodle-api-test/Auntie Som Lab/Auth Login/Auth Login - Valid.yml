@@ -1,0 +1,47 @@
+info:
+  name: Auth Login - Valid
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{baseUrl}}/auth/login"
+  body:
+    type: json
+    data: |-
+      {
+        "username": "student",
+        "password": "hungry"
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const body = res.getBody();
+
+        test("Verify status should be 200", () => {
+          expect(res.getStatus()).to.equal(200);
+        });
+
+        test("Verify response fields", () => {
+          expect(body).to.have.property("accessToken");
+          expect(body).to.have.property("expiresIn");
+        });
+
+        test("Verify response field types", () => {
+          expect(body.accessToken).to.be.a("string");
+          expect(body.expiresIn).to.be.a("number");
+        });
+
+        test("Verify accessToken should not be empty", () => {
+          expect(body.accessToken.length).to.be.greaterThan(0);
+        });
+
+        bru.setEnvVar("accessToken", body.accessToken);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

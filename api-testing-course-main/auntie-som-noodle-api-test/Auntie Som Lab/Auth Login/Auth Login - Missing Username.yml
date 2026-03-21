@@ -1,0 +1,29 @@
+info:
+  name: Auth Login - Missing Username
+  type: http
+  seq: 12
+
+http:
+  method: POST
+  url: "{{baseUrl}}/auth/login"
+  body:
+    type: json
+    data: |-
+      {
+        "password": "hungry"
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        test("Verify error status", () => {
+          expect(res.getStatus()).to.not.equal(200);
+          expect(res.getStatus()).to.be.equal(400);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

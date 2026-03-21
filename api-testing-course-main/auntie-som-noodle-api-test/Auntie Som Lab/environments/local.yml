@@ -1,0 +1,6 @@
+name: local
+variables:
+  - name: baseUrl
+    value: http://localhost:5000
+  - name: accessToken
+    value: 7fa71816-eb69-4b7d-bce5-82ea0fab870c

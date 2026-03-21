@@ -1,0 +1,59 @@
+info:
+  name: Get Menu
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{baseUrl}}/menu"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const body = res.getBody();
+
+        test("Verify status should be 200", () => {
+          expect(res.getStatus()).to.equal(200);
+        });
+
+        test("Verify menu should be an array", () => {
+          expect(body).to.be.an("array");
+        });
+
+        body.forEach((item) => {
+          test("Verify menu item structure", () => {
+            expect(item).to.have.property("id");
+            expect(item).to.have.property("name");
+            expect(item).to.have.property("price");
+            expect(item).to.have.property("stock");
+          });
+
+          test("Verify menu item types", () => {
+            expect(item.id).to.be.a("number");
+            expect(item.name).to.be.a("string");
+            expect(item.price).to.be.a("number");
+            expect(item.stock).to.be.a("number");
+          });
+
+          test("Verify price is valid", () => {
+            expect(item.price).to.be.greaterThan(0);
+          });
+        });
+
+        if (body.length > 0) {
+          bru.setEnvVar("itemId-1", body[0].id);
+          bru.setEnvVar("itemPrice-1", body[0].price);
+          bru.setEnvVar("itemStock-1", body[0].stock);
+          bru.setEnvVar("validQuantity-1", body[0].stock);
+        } 
+        if (body.length > 1) {
+          bru.setEnvVar("itemId-2", body[1].id);
+          bru.setEnvVar("invalidQuantity-2", body[0].stock + 1);
+        }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

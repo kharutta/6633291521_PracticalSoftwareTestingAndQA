@@ -1,0 +1,45 @@
+info:
+  name: Post Orders - Invalid Quantity (Out of stock)
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{baseUrl}}/orders"
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  body:
+    type: json
+    data: |-
+      {
+        "itemId": {{itemId-1}},
+        "quantity": {{itemStock-1}}
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const body = res.getBody();
+
+        test("Verify error status", () => {
+          expect(res.getStatus()).to.not.equal(200);
+          expect(res.getStatus()).to.be.oneOf([400, 409, 422]);
+        });
+
+        test("Verify response should contain 'error' field", () => {
+          expect(body).to.have.property("error");
+          expect(body).to.not.have.property("orderId");
+        });
+
+        test("Verify error message should be correct", () => {
+          expect(body.error).to.be.a("string");
+          expect(body.error).to.equal("Out of stock");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

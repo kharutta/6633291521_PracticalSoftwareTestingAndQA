@@ -1,0 +1,39 @@
+info:
+  name: Get Order - Valid
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{baseUrl}}/orders/{{orderId}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const body = res.getBody();
+        const expectedOrderId = bru.getEnvVar("orderId");
+        const expectedStatus = bru.getEnvVar("orderStatus");
+        const expectedTotalPrice = bru.getEnvVar("orderTotalPrice");
+
+        test("Verify status should be 200", () => {
+          expect(res.getStatus()).to.equal(200);
+        });
+
+        test("Verify response fields", () => {
+          expect(body).to.have.property("orderId");
+          expect(body).to.have.property("status");
+          expect(body).to.have.property("totalPrice");
+        });
+
+        test("Verify response should match data from created order", () => {
+          expect(body.orderId).to.equal(expectedOrderId);
+          expect(body.status).to.equal(expectedStatus);
+          expect(body.totalPrice).to.equal(expectedTotalPrice);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
